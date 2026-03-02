@@ -1,0 +1,17 @@
+Retrieval-Augmented Generation (RAG) is a technique in natural language processing that combines the power of large language models (LLMs) with external knowledge retrieval. Instead of relying solely on the parametric knowledge baked into the model during training, RAG systems first retrieve relevant documents or passages from a knowledge base, then use those retrieved documents as context to generate accurate and grounded answers.
+
+The core idea behind RAG is simple: when a user asks a question, the system first converts that question into an embedding vector, searches a vector database for the most similar document chunks, and then passes those chunks along with the original question to an LLM. The LLM then generates an answer strictly based on the retrieved context, reducing hallucinations and improving factual accuracy.
+
+RAG systems are particularly useful in enterprise settings where the knowledge base changes frequently, making it impractical to retrain the LLM every time new information is added. By separating the retrieval component from the generation component, RAG allows organizations to update their knowledge base without touching the underlying language model.
+
+The retrieval step in RAG typically uses dense vector search, where both the query and the documents are embedded into a high-dimensional vector space using models like sentence-transformers. Cosine similarity or L2 distance is then used to find the nearest neighbors in the embedding space, returning the most semantically relevant chunks.
+
+FAISS (Facebook AI Similarity Search) is one of the most popular libraries used for efficient similarity search in RAG systems. It supports billion-scale vector datasets and offers both exact and approximate nearest neighbor search algorithms. FAISS's IndexFlatL2 is a simple, exact search index based on L2 distance, suitable for smaller datasets.
+
+Chunking is an important preprocessing step in RAG pipelines. Long documents are split into smaller, overlapping chunks to ensure that each chunk fits within the model's context window and that important information at chunk boundaries is not lost. A common strategy is to use a fixed chunk size with a small overlap between consecutive chunks.
+
+Embeddings are dense vector representations of text that capture semantic meaning. The sentence-transformers library provides pre-trained models that generate high-quality embeddings for both short sentences and longer paragraphs. The model "all-MiniLM-L6-v2" is especially popular because it offers a good balance between embedding quality and inference speed on CPU hardware.
+
+One of the key advantages of RAG over traditional keyword search is its ability to handle semantic similarity. A keyword-based system might miss a relevant document if it uses different words than the query, while a dense retrieval system can still find it because the embeddings capture meaning rather than exact word matches.
+
+Prompt engineering plays a crucial role in RAG systems. The retrieved context is typically prepended to the user's question in a carefully crafted prompt that instructs the LLM to answer based only on the provided context and to respond with "I don't know" if the answer cannot be found in the retrieved documents.

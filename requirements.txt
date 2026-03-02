@@ -1,0 +1,5 @@
+sentence-transformers==3.4.1
+faiss-cpu==1.10.0
+numpy==1.26.4
+openai==1.65.4
+tqdm==4.67.1
